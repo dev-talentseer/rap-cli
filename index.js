@@ -112,7 +112,7 @@ RUNTIME='${runtime}'`;
                     const hookFileName = `${dir}/pre-push`;
                     const scriptContent = `#!/bin/bash
 # read config
-source ../../.env
+source .env
 
 if [ -z \${DB_CONNECTION_STRING} ]; then echo "DB_CONNECTION_STRING is unset" && exit 1; else travis env set DB_CONNECTION_STRING \${DB_CONNECTION_STRING}; fi
 if [ -z \${AWS_ACCESS_KEY_ID} ]; then echo "AWS_ACCESS_KEY_ID is unset" && exit 1; else travis env set AWS_ACCESS_KEY_ID \${AWS_ACCESS_KEY_ID}; fi
