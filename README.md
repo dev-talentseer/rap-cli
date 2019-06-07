@@ -1,7 +1,5 @@
 # Rap CLI
 
-[![Build Status](https://travis-ci.com/dev-talentseer/rap-cli.svg?token=CxF1Zpd3y8pJALXJ5RiT&branch=master)](https://travis-ci.com/dev-talentseer/rap-cli)
-
 CLI tool to create serverless project base on dawan-template.
 
 Integration: Travis CI, Commitizen, Serverless
@@ -25,7 +23,7 @@ npm install -g commitizen
 ## Installation
 
 ```bash
-npm install -g @rap/rap-cli&&npm link
+npm install -g @yong-talentseer/rap-cli
 ```
 
 ## Usage
