@@ -1,5 +1,5 @@
 {
-  "name": "rap-cli",
+  "name": "@yong-talentseer/rap-cli",
   "version": "1.0.0",
   "description": "node based scaffolding tool",
   "bin": {
@@ -13,9 +13,9 @@
   "husky": {
     "hooks": {
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
-     }
+    }
   },
-  "author": "",
+  "author": "yong-talentseer",
   "license": "ISC",
   "dependencies": {
     "chalk": "^2.4.2",
@@ -37,5 +37,13 @@
     "commitizen": {
       "path": "./node_modules/cz-emoji"
     }
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dev-talentseer/rap-cli.git"
+  },
+  "bugs": {
+    "url": "https://github.com/dev-talentseer/rap-cli/issues"
+  },
+  "homepage": "https://github.com/dev-talentseer/rap-cli#readme"
 }

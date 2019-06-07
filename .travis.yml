@@ -1,0 +1,11 @@
+language: node_js
+node_js:
+- node
+deploy:
+  provider: npm
+  email: yong.su@talentseer.com
+  api_key:
+    secure: kwAyNQeJUSlyHEwsNtzwFmKWipmOrt2aJTboOjtGuShdc0vGyr4fYirby6ZbPuLxQ7SYgpwyCXaCe2RdEQVxmB/JhRNZxUFeh46wC2gGIqT/ypn4NLZto2ZgFXYv/5/KC76PuyXLUOy1fRocN8Btpo9aIBCIFoMBUAf+s01xSrMeei62Sxmz5ZIHDFXsphEpUOE9FmYjk9rWpIprNvjrOg/4n9uXDlVYG+1fww3nxtt0CDGvorHpSLVzV9P+BgK2TbeSyU8HB0M2tGAkOXlZtJXpCTH50kXPnZxdbb6HbzRflJIkH+6ZL4A+h1mO+akFNDlGy7mcnWVj5kzl3Nup9UBzUJ1g8koYWN1GOBHELMS1ImyzJEMDIUvFy/AHmO0dE00KoiBtqcXmfgCIHK3YgwvthgAsPH6uPebdGhi6srdrX1BeGFRpJI8ZF6BEhtU3Bt6e4V7/GgQnmrs8WIRLl1HPmv+7nGmaStaR8a1EevWCF5J4TlD5v2QZG2ZdUt7eYUCAKawCrgmqzKBz27HKE6rSBspoe1iYDfJto3NLKWB/v94JCcAvWlV2Lv3XFX9bPmGou26GJxcy07sJ/Gc3hZI2Ahy6e4kx7B5+UglbwXhKEdsCLWyrhPk8l3zaHJ3cKA4WNcCCCscr6PDKjNLkpqAR8L01q12NFrnj848bA3M=
+  on:
+    tags: true
+    repo: dev-talentseer/rap-cli
