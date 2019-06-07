@@ -89,6 +89,21 @@ RUNTIME='${runtime}'`;
                 pkgSpinner.succeed();
 
 
+                const readmeSpinner = ora('creating README.md file from template...');
+                readmeSpinner.start();
+                try {
+                    const fileName = `${name}/README.md`;
+                    const content = fs.readFileSync(fileName).toString();
+                    const result = handlebars.compile(content)({ name: meta.name });
+                    fs.writeFileSync(fileName, result);
+                } catch (error) {
+                    readmeSpinner.fail();
+                    console.log(chalk.bold.red('error creating README.md file'));
+                    console.log(symbols.error, chalk.bold.red('project creating failed!'));
+                    return 1;
+                }
+                readmeSpinner.succeed();
+
                 const hookSpinner = ora('creating pre-push git hook...');
                 hookSpinner.start();
                 try {
@@ -106,7 +121,7 @@ if [ -z \${DOMAIN} ]; then echo "DOMAIN is unset" && exit 1; else travis env set
 if [ -z \${BASE_PATH} ]; then echo "BASE_PATH is unset" && exit 1; else travis env set BASE_PATH \${BASE_PATH}; fi
 if [ -z \${RUNTIME} ]; then echo "RUNTIME is unset" && exit 1; else travis env set RUNTIME \${RUNTIME}; fi
 `;
-                    fs.writeFileSync(hookFileName, scriptContent);
+                    fs.writeFileSync(hookFileName, scriptContent, { mode: 0o777 });
                 } catch (error) {
                     hookSpinner.fail();
                     console.log(error);
