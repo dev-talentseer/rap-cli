@@ -20,10 +20,6 @@ program.version('1.0.0', '-v, --version')
         }
         inquirer.prompt([
             {
-                name: 'description',
-                message: 'enter a description (optional)'
-            },
-            {
                 name: 'domain',
                 message: 'enter the domain you want to use [default: example.com] (optional)'
             },
@@ -48,7 +44,7 @@ program.version('1.0.0', '-v, --version')
                 spinner.succeed();
                 const meta = {
                     name,
-                    description: answers.description || ''
+                    description:  'Created with @yong-talentseer/rap-cli.'
                 };
 
                 const configSpinner = ora('creating .env file...');

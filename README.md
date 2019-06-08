@@ -6,6 +6,8 @@ Integration: Travis CI, Commitizen, Serverless
 
 ## Prerequisite
 
+   [Node.js 10.16.0+](https://nodejs.org/en/)
+
    [Travis CI CLI Documentation](https://github.com/travis-ci/travis.rb)
 
 ```bash
