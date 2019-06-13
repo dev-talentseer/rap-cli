@@ -29,7 +29,13 @@ program.version('1.0.0', '-v, --version')
             },
             {
                 name: 'runtime',
-                message: 'enter the runtime for this service [default: nodejs10.x] (optional)'
+                type: 'list',
+                choices: [
+                    "nodejs",
+                    "python",
+                ],
+                filter: val => val.toLowerCase(),
+                message: 'select the runtime for this service'
             }
         ]).then((answers) => {
             const spinner = ora('downloading template...');
@@ -38,32 +44,36 @@ program.version('1.0.0', '-v, --version')
                 if (err) {
                     spinner.fail();
                     console.log(chalk.bold.red('error downloading template file'));
+                    console.log(`error message: ${err}`);
                     console.log(symbols.error, chalk.bold.red('project creating failed!'));
                     return 1;
                 }
                 spinner.succeed();
                 const meta = {
                     name,
-                    description:  'Created with @yong-talentseer/rap-cli.'
+                    description: 'Created with @yong-talentseer/rap-cli.'
                 };
 
                 const configSpinner = ora('creating .env file...');
                 configSpinner.start();
+                const runtimes = { 'nodejs': 'nodejs10.x', 'python': 'python3.7' }
+                const domain = answers.domain || 'example.com';
+                const basePath = answers.basePath || 'api';
+                const chosenRuntime = answers.runtime || 'nodejs'
+                const runtime = runtimes[chosenRuntime];
                 try {
-                    const domain = answers.domain || 'example.com';
-                    const basePath = answers.basePath || 'api';
-                    const runtime = answers.runtime || 'nodejs10.x';
-
                     const variables = `DB_CONNECTION_STRING=''
 AWS_ACCESS_KEY_ID=''
 AWS_SECRET_ACCESS_KEY=''
-DOMAIN='${domain}'
-BASE_PATH='${basePath}'
-RUNTIME='${runtime}'`;
+`;
                     fs.writeFileSync(`${name}/.env`, variables)
+                    const fileNames = { 'nodejs': 'handler.js', 'python': 'handler.py' };
+                    Object.keys(fileNames).forEach(k => k === chosenRuntime ? console.log(k) : fs.unlinkSync(`${name}/${fileNames[k]}`));
+
                 } catch (error) {
                     configSpinner.fail();
-                    console.log(chalk.bold.red('error creating .env file'));
+                    console.log(chalk.bold.red('error creating .env file', error));
+                    console.log(`error message: ${error}`);
                     console.log(symbols.error, chalk.bold.red('project creating failed!'));
                     return 1;
                 }
@@ -79,11 +89,27 @@ RUNTIME='${runtime}'`;
                 } catch (error) {
                     pkgSpinner.fail();
                     console.log(chalk.bold.red('error creating package.json file'));
+                    console.log(`error message: ${error}`);
                     console.log(symbols.error, chalk.bold.red('project creating failed!'));
                     return 1;
                 }
                 pkgSpinner.succeed();
 
+                const ymlSpinner = ora('updating serverless.yml file from template...');
+                ymlSpinner.start();
+                try {
+                    const fileName = `${name}/serverless.yml`;
+                    const content = fs.readFileSync(fileName).toString();
+                    const result = handlebars.compile(content)({ name: meta.name, runtime: runtime, domain: domain, basePath: basePath });
+                    fs.writeFileSync(fileName, result);
+                } catch (error) {
+                    ymlSpinner.fail();
+                    console.log(chalk.bold.red('error updating serverless.yml file'));
+                    console.log(`error message: ${error}`);
+                    console.log(symbols.error, chalk.bold.red('project creating failed!'));
+                    return 1;
+                }
+                ymlSpinner.succeed();
 
                 const readmeSpinner = ora('creating README.md file from template...');
                 readmeSpinner.start();
@@ -95,6 +121,7 @@ RUNTIME='${runtime}'`;
                 } catch (error) {
                     readmeSpinner.fail();
                     console.log(chalk.bold.red('error creating README.md file'));
+                    console.log(`error message: ${error}`);
                     console.log(symbols.error, chalk.bold.red('project creating failed!'));
                     return 1;
                 }
@@ -120,8 +147,8 @@ if [ -z \${RUNTIME} ]; then echo "RUNTIME is unset" && exit 1; else travis env s
                     fs.writeFileSync(hookFileName, scriptContent, { mode: 0o777 });
                 } catch (error) {
                     hookSpinner.fail();
-                    console.log(error);
                     console.log(chalk.bold.red('error creating pre-push git hook'));
+                    console.log(`error message: ${error}`);
                     console.log(symbols.error, chalk.bold.red('project creating failed!'));
                     return 1;
                 }
