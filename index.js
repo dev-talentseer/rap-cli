@@ -140,9 +140,6 @@ source .env
 if [ -z \${DB_CONNECTION_STRING} ]; then echo "DB_CONNECTION_STRING is unset" && exit 1; else travis env set DB_CONNECTION_STRING \${DB_CONNECTION_STRING}; fi
 if [ -z \${AWS_ACCESS_KEY_ID} ]; then echo "AWS_ACCESS_KEY_ID is unset" && exit 1; else travis env set AWS_ACCESS_KEY_ID \${AWS_ACCESS_KEY_ID}; fi
 if [ -z \${AWS_SECRET_ACCESS_KEY} ]; then echo "AWS_SECRET_ACCESS_KEY is unset" && exit 1; else travis env set AWS_SECRET_ACCESS_KEY \${AWS_SECRET_ACCESS_KEY}; fi
-if [ -z \${DOMAIN} ]; then echo "DOMAIN is unset" && exit 1; else travis env set DOMAIN \${DOMAIN}; fi
-if [ -z \${BASE_PATH} ]; then echo "BASE_PATH is unset" && exit 1; else travis env set BASE_PATH \${BASE_PATH}; fi
-if [ -z \${RUNTIME} ]; then echo "RUNTIME is unset" && exit 1; else travis env set RUNTIME \${RUNTIME}; fi
 `;
                     fs.writeFileSync(hookFileName, scriptContent, { mode: 0o777 });
                 } catch (error) {
