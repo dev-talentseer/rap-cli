@@ -137,9 +137,11 @@ AWS_SECRET_ACCESS_KEY=''
 # read config
 source .env
 
-if [ -z \${DB_CONNECTION_STRING} ]; then echo "DB_CONNECTION_STRING is unset" && exit 1; else travis env set DB_CONNECTION_STRING \${DB_CONNECTION_STRING}; fi
-if [ -z \${AWS_ACCESS_KEY_ID} ]; then echo "AWS_ACCESS_KEY_ID is unset" && exit 1; else travis env set AWS_ACCESS_KEY_ID \${AWS_ACCESS_KEY_ID}; fi
-if [ -z \${AWS_SECRET_ACCESS_KEY} ]; then echo "AWS_SECRET_ACCESS_KEY is unset" && exit 1; else travis env set AWS_SECRET_ACCESS_KEY \${AWS_SECRET_ACCESS_KEY}; fi
+if [ -z \${DB_CONNECTION_STRING} ]; then echo "DB_CONNECTION_STRING is unset" && exit 1; fi
+if [ -z \${AWS_ACCESS_KEY_ID} ]; then echo "AWS_ACCESS_KEY_ID is unset" && exit 1; fi
+if [ -z \${AWS_SECRET_ACCESS_KEY} ]; then echo "AWS_SECRET_ACCESS_KEY is unset" && exit 1; fi
+while read -r key val; do travis env set \$key \$val; done < .env
+exit 0;
 `;
                     fs.writeFileSync(hookFileName, scriptContent, { mode: 0o777 });
                 } catch (error) {
