@@ -1,6 +1,6 @@
 {
   "name": "@yong-talentseer/rap-cli",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "node based scaffolding tool",
   "bin": {
     "rap": "index.js"
