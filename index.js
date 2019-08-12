@@ -137,7 +137,6 @@ AWS_SECRET_ACCESS_KEY=''
 # read config
 source .env
 
-if [ -z \${DB_CONNECTION_STRING} ]; then echo "DB_CONNECTION_STRING is unset" && exit 1; fi
 if [ -z \${AWS_ACCESS_KEY_ID} ]; then echo "AWS_ACCESS_KEY_ID is unset" && exit 1; fi
 if [ -z \${AWS_SECRET_ACCESS_KEY} ]; then echo "AWS_SECRET_ACCESS_KEY is unset" && exit 1; fi
 while IFS== read -r key val; do temp=\`sed -e "s/^'//" -e "s/'$//" <<<\${val}\`;travis env set \${key} \${temp}; done < .env
